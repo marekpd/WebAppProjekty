@@ -1,0 +1,10 @@
+﻿Konfiguracia: 
+WebAppProjekty.zip je potrebné rozbaliť do c:\ProgramData\
+
+Výsledok:
+c:\ProgramData\WebAppProjekty\projects.xml
+c:\ProgramData\WebAppProjekty\settings.xml
+
+Spustenie webového servera:
+- Po publikovaní aplikácie (Publish your application to a local folder or file share) cez Visual Studio 2022 je treba spustiť IIS Express a to nasledovne: "c:\Program Files\IIS Express\iisexpress.exe" /path:c:\Code\ICZ2024\WebAppProjekty\bin\app.publish\ /port:59349
+- Potom vo webovom prehliadači (Edge): localhost:59349/WebServiceProjekty.asmx
