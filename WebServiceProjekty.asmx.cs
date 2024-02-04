@@ -37,29 +37,35 @@ namespace WebAppProjekty
         /// Patri sa, aby sa klient na zaciatku pozdravil a povedal heslo (zaroven sa napr. nacita XML databaza ak este nie je).
         /// </summary>
         [WebMethod]
-        public bool Hello(string password)
+        public bool Hello(string password, out string errMsg)
         {
             try
             {
-                Settings sett = new Settings(getDataFolder() + "settings.xml");
+                string dataFolder = getDataFolder();
+                if (!Directory.Exists(dataFolder)) throw new Exception("Data folder doesn't exist: '" + dataFolder + "'!");
 
-                Logger.SetLogFilePath(getFullPath(sett["logging"], getDataFolder()));
+                string fnSett = dataFolder + "settings.xml";
+                Settings sett = new Settings(fnSett); //throw
+
+                Logger.SetLogFilePath(getFullPath(sett["logging"], dataFolder));
                 Logger.Log("Password=[" + password + "]");
                 
                 if (password != sett["password"]) throw new Exception("Incorrect password!");
 
                 if (!m_projects.opened())
                 {
-                    string fnXml = getFullPath(sett["database"], getDataFolder()); //c:\ProgramData\WebAppProjekty\projects.xml 
-                    if (!m_projects.open(fnXml)) throw new Exception("Can't open XML file '" + fnXml + "'!"); //nacitanie projektov z XML subora (databazy)
+                    string fnXml = getFullPath(sett["database"], dataFolder); //c:\ProgramData\WebAppProjekty\projects.xml 
+                    if (!m_projects.open(fnXml)) throw new Exception("Can't open XML database: '" + fnXml + "'!"); //nacitanie projektov z XML subora (databazy)
                 }
 
                 Logger.Log("OK");
+                errMsg = "";
                 return true;
             }
             catch (Exception e)
             {
                 Logger.Log("Error: " + e.Message);
+                errMsg = e.Message;                
                 return false;
             }
         }
