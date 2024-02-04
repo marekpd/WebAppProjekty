@@ -1,10 +1,29 @@
-﻿Konfiguracia: 
-WebAppProjekty.zip je potrebné rozbaliť do c:\ProgramData\
+﻿----------------------------------------------------------------------
+K O N F I G U R Á C I A   S E R V E R A
+
+----------------------------------------------------------------------
+1) "WebAppProjekty.zip" je potrebné rozbaliť do c:\ProgramData\
 
 Výsledok:
-c:\ProgramData\WebAppProjekty\projects.xml
-c:\ProgramData\WebAppProjekty\settings.xml
+c:\ProgramData\WebAppProjekty\projects.xml ... databáza
+c:\ProgramData\WebAppProjekty\settings.xml ... nastavenia
 
-Spustenie webového servera:
-- Po publikovaní aplikácie (Publish your application to a local folder or file share) cez Visual Studio 2022 je treba spustiť IIS Express a to nasledovne: "c:\Program Files\IIS Express\iisexpress.exe" /path:c:\Code\ICZ2024\WebAppProjekty\bin\app.publish\ /port:59349
+----------------------------------------------------------------------
+2) "bin.zip" je potrebné rozbaliť do projektového adresára WebAppProjekty.
+
+Výsledok:
+c:\Code\ICZ2024\WebAppProjekty\bin\roslyn\*.* (18.1 MB)
+c:\Code\ICZ2024\WebAppProjekty\bin\app.publish\*.* (18.2 MB) 
+
+Adresár "bin\roslyn\" je potrebný pri spustení servera z prostredia Visual Studio 2022. Bez neho webový prehliadač hlási chybu: Server Error in '/' Application. Could not find a part of the path 'C:\Code\ICZ2024\WebAppProjekty\bin\roslyn\csc.exe'.
+
+Adresár "bin\app.publish\" aj s podadresármi je potrebný v prípade spustenia webového servera mimo prostredia Visual Studio, vid. (3).
+
+----------------------------------------------------------------------
+3) Spustenie webového servera mimo Visual Studio:
+
+- Publikovanie aplikácie (Publish your application to a local folder or file share) cez Visual Studio 2022 vytvorilo adresár "bin\app.publish\".
+- IIS Express je treba spustiť nasledovne: "c:\Program Files\IIS Express\iisexpress.exe" /path:c:\Code\ICZ2024\WebAppProjekty\bin\app.publish\ /port:59349
 - Potom vo webovom prehliadači (Edge): localhost:59349/WebServiceProjekty.asmx
+
+----------------------------------------------------------------------
